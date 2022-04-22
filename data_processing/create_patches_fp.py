@@ -1,4 +1,6 @@
 # internal imports
+import sys
+sys.path.append('..')
 from wsi_core.WholeSlideImage import WholeSlideImage
 from wsi_core.wsi_utils import StitchCoords
 from wsi_core.batch_process_utils import initialize_df
@@ -54,9 +56,7 @@ def seg_and_patch(source, save_dir, patch_save_dir, mask_save_dir, stitch_save_d
                   seg=False, save_mask=True,
                   stitch=False,
                   patch=False, auto_skip=True, process_list=None):
-    slides = sorted(os.listdir(source))
-    slides = [slide for slide in slides if os.path.isfile(os.path.join(source, slide))]
-    # slides = [slide for slide in slides if os.path.isdir(os.path.join(source, slide))]
+    slides = os.listdir(source)
     if process_list is None:
         df = initialize_df(slides, seg_params, filter_params, vis_params, patch_params)
 
@@ -221,16 +221,16 @@ def seg_and_patch(source, save_dir, patch_save_dir, mask_save_dir, stitch_save_d
 
 
 parser = argparse.ArgumentParser(description='seg and patch')
-parser.add_argument('--source', type=str, default="slides/TCGA-BRCA",
+parser.add_argument('--source', type=str, default="../slides/TCGA-LUNG",
                     help='path to folder containing raw wsi image files')
-parser.add_argument('--data_type', type=str, default="tcga_brca")
+parser.add_argument('--data_type', type=str, default="tcga_lung")
 parser.add_argument('--step_size', type=int, default=256, help='step_size')
 parser.add_argument('--patch_size', type=int, default=256, help='patch_size')
 parser.add_argument('--patch', default=True, action='store_true')
 parser.add_argument('--seg', default=True, action='store_true')
 parser.add_argument('--stitch', default=False, action='store_true')
 parser.add_argument('--no_auto_skip', default=False, action='store_false')
-parser.add_argument('--save_dir', type=str, default="tile_results",
+parser.add_argument('--save_dir', type=str, default="../tile_results",
                     help='directory to save processed data')
 parser.add_argument('--preset', default=None, type=str,
                     help='predefined profile of default segmentation and filter parameters (.csv)')
