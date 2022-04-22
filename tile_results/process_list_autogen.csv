@@ -1,0 +1,2 @@
+slide_id,process,status,seg_level,sthresh,mthresh,close,use_otsu,keep_ids,exclude_ids,a_t,a_h,max_n_holes,vis_level,line_thickness,use_padding,contour_fn
+TCGA-63-7022-01A-01-BS1.b7eeb711-cd00-4172-ba09-a7f5c5eed805.svs,0,processed,2,8,7,4,True,none,none,100.0,3.0,2048,2,250,True,four_pt
