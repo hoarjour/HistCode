@@ -2,12 +2,10 @@ import os
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
-import time
 from torch.nn import DataParallel
 from datasets.dataset_h5 import Dataset_All_Bags, Whole_Slide_Bag_FP
 import openslide
 from torch.utils.data import DataLoader
-from os import mkdir
 
 from Adco.model.AdCo import AdCo, Adversary_Negatives
 
@@ -15,33 +13,6 @@ from Adco.training.train_utils import adjust_learning_rate,save_checkpoint
 from Adco.training.train import train, init_memory
 from data_processing.transform import TwoCropsTransform, GaussianBlur
 
-
-def init_log_path(args):
-    """
-    :param args:
-    :return:
-    save model+log path
-    """
-    save_path = os.path.join(os.getcwd(), args.log_path)
-    if args.gpu == 0:
-        mkdir(save_path)
-    save_path = os.path.join(save_path, args.dataset)
-    if args.gpu == 0:
-        mkdir(save_path)
-    save_path = os.path.join(save_path, "lr_" + str(args.lr) + "_memlr" + str(args.memory_lr))
-    if args.gpu == 0:
-        mkdir(save_path)
-    save_path = os.path.join(save_path, "cos_" + str(args.cos))
-    if args.gpu == 0:
-        mkdir(save_path)
-    import datetime
-    today = datetime.date.today()
-    formatted_today = today.strftime('%y%m%d')
-    now = time.strftime("%H:%M:%S")
-    save_path = os.path.join(save_path, formatted_today + now)
-    if args.gpu == 0:
-        mkdir(save_path)
-    return save_path
 
 def main_worker(gpu, args):
     args.gpu = gpu
@@ -92,6 +63,7 @@ def main_worker(gpu, args):
     for bag_candidate_idx in range(total):
         slide_id = bags_dataset[bag_candidate_idx]
         bag_name = slide_id + '.h5'
+        # coord file path
         h5_file_path = os.path.join(args.data_h5_dir, 'patches', args.data_type, bag_name)
 
         slide_filename = slide_id + ".svs"
@@ -107,7 +79,6 @@ def main_worker(gpu, args):
         train_loaders.append(train_loader)
 
     print(f"a total of {total_length} patches")
-    bank_size=args.cluster
     model.eval()
     #init memory bank
     if args.ad_init and not os.path.isfile(args.resume):
