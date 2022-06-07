@@ -10,7 +10,6 @@ def main(args):
         print("Current we choose gpu:%s" % args.choose)
     args.distributed = False
 
-
     main_worker(args.gpu, args)
 
 

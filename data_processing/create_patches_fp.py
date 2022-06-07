@@ -21,25 +21,25 @@ def stitching(file_path, wsi_object, downscale=64):
 
 
 def segment(WSI_object, seg_params, filter_params):
-    ### Start Seg Timer
+    # Start Seg Timer
     start_time = time.time()
 
     # Segment
     WSI_object.segmentTissue(**seg_params, filter_params=filter_params)
 
-    ### Stop Seg Timers
+    # Stop Seg Timers
     seg_time_elapsed = time.time() - start_time
     return WSI_object, seg_time_elapsed
 
 
 def patching(WSI_object, **kwargs):
-    ### Start Patch Timer
+    # Start Patch Timer
     start_time = time.time()
 
     # Patch
     file_path = WSI_object.process_contours(**kwargs)
 
-    ### Stop Patch Timer
+    # Stop Patch Timer
     patch_time_elapsed = time.time() - start_time
     return file_path, patch_time_elapsed
 

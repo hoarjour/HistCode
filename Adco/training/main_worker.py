@@ -100,6 +100,6 @@ def main_worker(gpu, args):
         'best_acc': best_Acc,
         'state_dict': model.state_dict(),
     }
-    tmp_save_path = os.path.join(args.save_path, f'cl_10_{args.data_type}_not_sym_200.pth.tar')
+    tmp_save_path = os.path.join(args.save_path, f'adco_{args.data_type}_not_sym.pth.tar')
 
     save_checkpoint(save_dict, filename=tmp_save_path)

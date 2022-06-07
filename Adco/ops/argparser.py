@@ -7,7 +7,7 @@ model_names = sorted(name for name in models.__dict__
 
 def argparser():
     parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
-    parser.add_argument('--save_path', default="../models", type=str, help="model and record save path")
+    parser.add_argument('--save_path', default="../MODELS", type=str, help="model and record save path")
 
     parser.add_argument('--csv_path', type=str, default='../dataset_csv/sample_data.csv')
     parser.add_argument('--slide_ext', type=str, default='.svs')
@@ -15,7 +15,6 @@ def argparser():
     parser.add_argument('--data_slide_dir', type=str, default="../slides/TCGA-LUNG")
     parser.add_argument('--data_type', type=str, default="tcga_lung")
 
-    parser.add_argument('--log_path', type=str, default="train_log", help="log path for saving models")
     parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
                         # choices=model_names,
                         type=str,
@@ -50,23 +49,10 @@ def argparser():
                         metavar='N', help='print frequency (default: 10)')
     parser.add_argument('--resume', default='', type=str, metavar='PATH',
                         help='path to latest checkpoint (default: none)')
-    parser.add_argument('--world_size', default=1, type=int,
-                        help='number of nodes for distributed training,args.nodes_num*args.ngpu,here we specify with the number of nodes')
-    parser.add_argument('--rank', default=0, type=int,
-                        help='node rank for distributed training,rank of total threads, 0 to args.world_size-1')
-    parser.add_argument('--dist_url', default='tcp://224.66.41.62:23456', type=str,
-                        help='url used to set up distributed training')
-    parser.add_argument('--dist_backend', default='nccl', type=str,
-                        help='distributed backend')
     parser.add_argument('--seed', default=None, type=int,
                         help='seed for initializing training. ')
     parser.add_argument('--gpu', default=None, type=int,
                         help='GPU id to use.')
-    parser.add_argument('--multiprocessing_distributed', type=int, default=1,
-                        help='Use multi-processing distributed training to launch '
-                             'N processes per node, which has N GPUs. This is the '
-                             'fastest way to use PyTorch for either single node or '
-                             'multi node data parallel training')
 
     # moco specific configs:
     parser.add_argument('--moco_dim', default=128, type=int,
@@ -97,10 +83,6 @@ def argparser():
     parser.add_argument('--memory_lr', type=float, default=0.3, help="learning rate for adversial memory bank")
     parser.add_argument("--ad_init", type=int, default=1, help="use feature encoding to init or not")
     parser.add_argument("--nodes_num", type=int, default=1, help="number of nodes to use")
-    parser.add_argument("--ngpu", type=int, default=8, help="number of gpus per node")
-    parser.add_argument("--master_addr", type=str, default="127.0.0.1", help="addr for master node")
-    parser.add_argument("--master_port", type=str, default="1234", help="port for master node")
-    parser.add_argument('--node_rank', type=int, default=0, help='rank of machine, 0 to nodes_num-1')
 
     parser.add_argument('--mem_t', default=0.02, type=float,
                         help='temperature for memory bank(default: 0.07)')

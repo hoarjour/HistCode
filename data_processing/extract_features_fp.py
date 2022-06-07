@@ -67,7 +67,7 @@ parser.add_argument('--target_patch_size', type=int, default=-1)
 
 parser.add_argument('--model_type', type=str, default="ADCO")
 parser.add_argument('--data_type', type=str, default="tcga_lung")
-parser.add_argument('--model_path', type=str, default="../models/cl_10_tcga_lung_not_sym_200.pth.tar")
+parser.add_argument('--model_path', type=str, default="../MODELS/adco_tcga_lung_not_sym.pth.tar")
 args = parser.parse_args()
 
 
