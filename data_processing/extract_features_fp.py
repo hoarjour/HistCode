@@ -100,9 +100,7 @@ if __name__ == '__main__':
     type_path = args.model_type
 
     os.makedirs(args.feat_dir, exist_ok=True)
-    os.makedirs(os.path.join(args.feat_dir, 'pt_files', type_path), exist_ok=True)
     os.makedirs(os.path.join(args.feat_dir, 'h5_files', type_path), exist_ok=True)
-    dest_files = os.listdir(os.path.join(args.feat_dir, 'pt_files', type_path))
 
     model = load_model(args.model_path)
     model = model.to(device)

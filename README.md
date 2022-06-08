@@ -1,6 +1,7 @@
 # HistCode
-Source code and data for 
-"Contrastive learning-based computational histopathology predict differential expression of cancer driver genes"
+Source code and data for
+"Contrastive learning-based computational histopathology predict differential expression of cancer driver genes"  
+[arxiv](https://arxiv.org/abs/2204.11994)
 
 HistCode is a multi-stage model. 
 Firstly, [adversarial contrastive learning](https://arxiv.org/abs/2011.08435) is used to unsupervised extract tile-level features, 
@@ -63,3 +64,20 @@ dataset_csv/clf
 ```  
 The default number of folds is 5, if user want to change fold numbers, add ```--k fold_number``` and prepare corresponding training files in dataset_csv/clf.
 The training files is like dataset_csv/clf/sample_data2.csv.
+
+## Train Gene Regression Model
+Run train/train_gene_reg_model.py to perform downstream regression task. For example:  
+``` shell
+python train_gene_reg_model.py --data_root_dir ../FEATURES --extract_model ADCO --results_dir ../MODELS/gene --csv_dir ../dataset_csv/gene --k 5
+```  
+The above command will train regression that using attention-pooling to aggregate tile features by default. User should prepare gene dataset like this:  
+``` bash
+dataset_csv/gene
+	     ├── train_dataset_1.csv
+	     ├── ...
+	     ├── train_dataset_5.csv
+	     ├── test_dataset_1.csv
+	     ├── ...
+	     ├── test_dataset_5.csv
+```  
+The training files is like dataset_csv/gene/sample_gene_data.csv.
